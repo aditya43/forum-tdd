@@ -4,8 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card text-white bg-secondary mb-3">
-                <div class="card-header">{{ $thread->title }}</div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <a href="#">{{ $thread->creator->name }}</a> posted:
+                    {{ $thread->title }}
+                </div>
 
                 <div class="card-body">
                     <div class="body">{{ $thread->body }}</div>
@@ -17,17 +20,7 @@
         <div class="row justify-content-center">
         <div class="col-md-8">
             @foreach ($thread->replies as $reply)
-                <div class="card bg-light mb-3">
-                    <div class="card-header">
-                        <a href="#">{{ $reply->owner->name }}</a>
-                        replied
-                        {{ $reply->created_at->diffForHumans() }}
-                    </div>
-
-                    <div class="card-body">
-                        <div class="body">{{ $reply->body }}</div>
-                    </div>
-                </div>
+                @include('partials.threads._reply')
             @endforeach
         </div>
     </div>

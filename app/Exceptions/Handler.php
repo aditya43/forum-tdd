@@ -23,7 +23,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontFlash = [
         'password',
-        'password_confirmation',
+        'password_confirmation'
     ];
 
     /**
@@ -48,6 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (app()->environment() === 'local' || app()->environment() === 'testing')
+        {
+            throw $exception;
+        }
         return parent::render($request, $exception);
     }
 }
