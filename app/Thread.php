@@ -10,4 +10,14 @@ class Thread extends Model
     {
         return '/threads/' . $this->id;
     }
+
+    /**
+     * Thread has many Replies.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(\App\Reply::class);
+    }
 }
