@@ -13,11 +13,9 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function authenticated_user_can_create_new_forum_thread()
     {
-        $user = factory(\App\User::class)->create();
+        $this->signIn();
 
-        $this->actingAs($user);
-
-        $thread = factory(\App\Thread::class)->make();
+        $thread = make(\App\Thread::class);
 
         $this->post('/threads', $thread->toArray());
 
@@ -31,7 +29,7 @@ class CreateThreadsTest extends TestCase
     {
         $this->expectException(\Illuminate\Auth\AuthenticationException::class);
 
-        $thread = factory(\App\Thread::class)->make();
+        $thread = make(\App\Thread::class);
 
         $this->post('/threads', $thread->toArray());
     }
