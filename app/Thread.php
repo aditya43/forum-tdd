@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class Thread extends Model
      * @var array
      */
     protected $guarded = [];
+
     /**
      * Get a string path for the thread.
      *
