@@ -9,7 +9,7 @@
 
 ## About This Project
 
-This is a fully functional forum app built in Laravel framework with a Test Driven Development.
+Fully functional forum app built in a Laravel framework, using the Test Driven Development technique.
 
 ## Current Status
 

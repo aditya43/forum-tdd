@@ -11,13 +11,21 @@ class ParticipateInForumsTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function unauthenticated_users_can_not_add_replies()
+    {
+        // $this->expectException(\Illuminate\Auth\AuthenticationException::class);
+
+        $this->post('/threads/some-channel/1/replies', []) // Submit reply via POST request.
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     public function authenticated_user_can_participate_in_forum_threads()
     {
         $this->signIn();
 
         $thread = create(\App\Thread::class); // Create a thread.
-
-        $reply = make(\App\Reply::class); // Create a reply.
+        $reply  = make(\App\Reply::class);    // Create a reply.
 
         $this->post($thread->path() . '/replies', $reply->toArray()); // Submit reply via POST request.
 
@@ -26,11 +34,14 @@ class ParticipateInForumsTest extends TestCase
     }
 
     /** @test */
-    public function unauthenticated_users_can_not_add_replies()
+    public function a_reply_requires_a_body()
     {
-        // $this->expectException(\Illuminate\Auth\AuthenticationException::class);
+        $this->signIn();
 
-        $this->post('/threads/some-channel/1/replies', []) // Submit reply via POST request.
-            ->assertRedirect('/login');
+        $thread = create(\App\Thread::class);
+        $reply  = make(\App\Reply::class, ['body' => null]);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertSessionHasErrors('body');
     }
 }
