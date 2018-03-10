@@ -17,7 +17,7 @@ abstract class Filters
      *
      * @var \Illuminate\Database\Eloquent\Builder
      */
-    protected $builder;
+    protected $query;
 
     /**
      * Registered filters to operate upon.
@@ -39,12 +39,12 @@ abstract class Filters
     /**
      * Apply the filters.
      *
-     * @param  Builder $builder
+     * @param  Builder $query
      * @return Builder
      */
-    public function apply($builder)
+    public function apply($query)
     {
-        $this->builder = $builder;
+        $this->query = $query;
 
         foreach ($this->getFilters() as $filter => $value)
         {
@@ -53,7 +53,8 @@ abstract class Filters
                 $this->$filter($value);
             }
         }
-        return $this->builder;
+
+        return $this->query;
     }
 
     /**
