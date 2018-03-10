@@ -16,15 +16,15 @@ class AppServiceProvider extends ServiceProvider
         /**
          * To share with all views "*"
          */
-        // \View::composer('*', function ($view)
-        // {
-        //     $view->with('channels', \App\Channel::all());
-        // });
+        \View::composer('*', function ($view)
+        {
+            $view->with('channels', \App\Channel::all());
+        });
 
         /**
          * To share with all views using View::share()
          */
-        \View::share('channels', \App\Channel::all());
+        // \View::share('channels', \App\Channel::all());
     }
 
     /**
