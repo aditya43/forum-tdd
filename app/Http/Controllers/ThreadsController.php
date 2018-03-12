@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Channel;
-use App\Filters\ThreadFilters;
 use App\Thread;
+use App\Channel;
 use Illuminate\Http\Request;
+use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
@@ -109,7 +109,12 @@ class ThreadsController extends Controller
      */
     public function destroy($channel, Thread $thread)
     {
-        // $thread->replies()->delete(); // Instead of this, we will use model events.
+        $this->authorize('update', $thread);
+
+        if ($thread->user_id != auth()->id()) {
+            abort(403, 'Permission Denied');
+        }
+
         $thread->delete();
 
         if (request()->wantsJson()) {

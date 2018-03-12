@@ -9,11 +9,12 @@
                 <div class="card-header">
                     <div class="level">
                         <span class="flex">{{ $thread->title }}</span>
+                        @can('update', $thread)
                         <form action="{{ $thread->path() }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                            @csrf @method('DELETE')
                             <button type="submit" class="btn btn-link">Delete</button>
                         </form>
+                        @endcan                        
                     </div>                    
                 </div>
                 

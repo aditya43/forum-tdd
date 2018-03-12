@@ -1,10 +1,9 @@
-@extends('layouts.app')
-
+@extends('layouts.app') 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            @foreach ($threads as $thread)            
+            @forelse ($threads as $thread)
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="level">
@@ -16,12 +15,13 @@
                         </strong>
                     </div>
                 </div>
-                
                 <div class="card-body">
                     <div class="body">{{ $thread->body }}</div>
                 </div>
             </div>
-            @endforeach
+            @empty
+            <p>There are 0 threads associated with this channel.</p>
+            @endforelse
         </div>
     </div>
 </div>
