@@ -52,14 +52,14 @@ class ThreadsController extends Controller
             'channel_id' => 'required|exists:channels,id',
             'title'      => 'required',
             'body'       => 'required'
-        ]);
+            ]);
 
         $thread = Thread::create([
-            'user_id'    => auth()->id(),
-            'channel_id' => request('channel_id'),
-            'title'      => request('title'),
-            'body'       => request('body')
-        ]);
+                'user_id'    => auth()->id(),
+                'channel_id' => request('channel_id'),
+                'title'      => request('title'),
+                'body'       => request('body')
+                ]);
 
         return redirect($thread->path());
     }
@@ -70,12 +70,12 @@ class ThreadsController extends Controller
      * @param  \App\Thread               $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Thread $thread)
+    public function show($channel, Thread $thread)
     {
         return view('threads.show', [
-            'thread'  => $thread,
-            'replies' => $thread->replies()->paginate(5)
-        ]);
+                    'thread'  => $thread,
+                    'replies' => $thread->replies()->paginate(5)
+                    ]);
     }
 
     /**
@@ -107,9 +107,16 @@ class ThreadsController extends Controller
      * @param  \App\Thread               $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        //
+        // $thread->replies()->delete(); // Instead of this, we will use model events.
+        $thread->delete();
+
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+
+        return redirect('/threads');
     }
 
     /**
