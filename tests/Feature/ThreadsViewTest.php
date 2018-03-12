@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class ThreadsViewTest extends TestCase
 {
     use RefreshDatabase;
+    use InteractsWithExceptionHandling;
 
     public function setUp()
     {

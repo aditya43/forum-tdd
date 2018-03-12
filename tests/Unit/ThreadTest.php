@@ -2,20 +2,20 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class ThreadTest extends TestCase
 {
     use RefreshDatabase;
+    use InteractsWithExceptionHandling;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->thread = create(\App\Thread::class);
-
     }
 
     /** @test */

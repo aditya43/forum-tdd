@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class CreateThreadsTest extends TestCase
 {
     use RefreshDatabase;
+    use InteractsWithExceptionHandling;
 
     /** @test */
     public function unauthenticated_users_cannot_create_forum_thread()

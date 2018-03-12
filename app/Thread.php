@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -23,8 +24,7 @@ class Thread extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('replyCount', function ($builder)
-        {
+        static::addGlobalScope('replyCount', function ($builder) {
             $builder->withCount('replies');
         });
     }
@@ -47,7 +47,6 @@ class Thread extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
-
     }
 
     /**

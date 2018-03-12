@@ -2,13 +2,14 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class ParticipateInForumsTest extends TestCase
 {
     use RefreshDatabase;
+    use InteractsWithExceptionHandling;
 
     /** @test */
     public function unauthenticated_users_can_not_add_replies()

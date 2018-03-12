@@ -2,13 +2,14 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class ReplyTest extends TestCase
 {
     use RefreshDatabase;
+    use InteractsWithExceptionHandling;
 
     /** @test */
     public function it_has_an_owner()

@@ -1,7 +1,6 @@
 <?php
 
-Route::get('/', function ()
-{
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -20,3 +19,5 @@ Route::post('/threads', 'ThreadsController@store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
 
 Route::post('/replies/{reply}/favourites', 'FavouritesController@store');
+
+Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');

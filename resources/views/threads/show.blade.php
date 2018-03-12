@@ -13,7 +13,9 @@
                 <div class="card-body">
                     <div class="body">{{ $thread->body }}</div>
                 </div>
+
             </div>
+            
             @foreach ($replies as $reply)
                 @include('partials.threads._reply')
             @endforeach
@@ -41,7 +43,7 @@
             <div class="card-body">
                     <div class="body">
                         This thread was published {{ $thread->created_at->diffForHumans() }} by
-                        <a href="#">{{ $thread->creator->name }}</a>, and currently has
+                        <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a>, and currently has
                         {{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}.
                     </div>
                 </div>
