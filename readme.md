@@ -4,6 +4,7 @@ Forum app built in a Laravel framework using  Test Driven Development technique.
 
 
 
+
 ## Components
 
 - User System.
@@ -21,9 +22,11 @@ Forum app built in a Laravel framework using  Test Driven Development technique.
 
 
 
+
 ## Current Status
 
 WIP (Work In Progress)!
+
 
 
 
@@ -31,13 +34,16 @@ WIP (Work In Progress)!
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/aditya43/forum-tdd/master/screens/1.png">
+
 ---
 
 <img src="https://raw.githubusercontent.com/aditya43/forum-tdd/master/screens/2.png">
+
 ---
 
 <img src="https://raw.githubusercontent.com/aditya43/forum-tdd/master/screens/3.png">
 </p>
+
 
 
 
