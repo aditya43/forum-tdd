@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Support\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
@@ -38,5 +39,25 @@ class ActivityTest extends TestCase
         $reply = create(\App\Reply::class);
 
         $this->assertEquals(2, \App\Activity::count());
+    }
+
+    /** @test */
+    public function it_fetches_a_feed_for_any_user()
+    {
+        $this->signIn();
+
+        create(\App\Thread::class, ['user_id' => auth()->id()], 2);
+
+        auth()->user()->activity()->first()->update(['created_at' => Carbon::now()->subWeek()]);
+
+        $feed = \App\Activity::feed(auth()->user());
+
+        $this->assertTrue($feed->keys()->contains(
+            \Carbon\Carbon::now()->format('Y-m-d')
+        ));
+
+        $this->assertTrue($feed->keys()->contains(
+            \Carbon\Carbon::now()->subWeek()->format('Y-m-d')
+        ));
     }
 }
