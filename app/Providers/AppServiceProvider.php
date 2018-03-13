@@ -16,10 +16,8 @@ class AppServiceProvider extends ServiceProvider
         /**
          * To share with all views "*"
          */
-        \View::composer('*', function ($view)
-        {
-            $channels = \Illuminate\Support\Facades\Cache::rememberForever('channels', function ()
-            {
+        \View::composer('*', function ($view) {
+            $channels = \Illuminate\Support\Facades\Cache::rememberForever('channels', function () {
                 return \App\Channel::all();
             });
 
@@ -39,8 +37,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->isLocal())
-        {
+        if ($this->app->isLocal()) {
             $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
         }
     }
