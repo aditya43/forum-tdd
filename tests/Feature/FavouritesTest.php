@@ -25,6 +25,7 @@ class FavouritesTest extends TestCase
         $this->withExceptionHandling();
 
         $this->signIn();
+
         $reply = create(\App\Reply::class);
 
         $this->post('replies/' . $reply->id . '/favourites');
@@ -38,6 +39,7 @@ class FavouritesTest extends TestCase
         $this->withExceptionHandling();
 
         $this->signIn();
+
         $reply = create(\App\Reply::class);
 
         $this->post('replies/' . $reply->id . '/favourites');

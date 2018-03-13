@@ -102,8 +102,6 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function authorized_users_can_delete_threads()
     {
-        $this->withExceptionHandling();
-
         $this->signIn();
         $thread = create(\App\Thread::class, ['user_id' => auth()->id()]);
         $reply  = create(\App\Reply::class, ['thread_id' => $thread->id]);
