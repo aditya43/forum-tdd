@@ -15,6 +15,7 @@ class ParticipateInForumsTest extends TestCase
     public function unauthenticated_users_can_not_add_replies()
     {
         // $this->expectException(\Illuminate\Auth\AuthenticationException::class);
+        $this->withExceptionHandling();
 
         $this->post('/threads/some-channel/1/replies', []) // Submit reply via POST request.
             ->assertRedirect('/login');
@@ -23,6 +24,8 @@ class ParticipateInForumsTest extends TestCase
     /** @test */
     public function authenticated_user_can_participate_in_forum_threads()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create(\App\Thread::class); // Create a thread.
@@ -37,6 +40,8 @@ class ParticipateInForumsTest extends TestCase
     /** @test */
     public function a_reply_requires_a_body()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create(\App\Thread::class);

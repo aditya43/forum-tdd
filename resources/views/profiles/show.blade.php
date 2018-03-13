@@ -4,27 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h2>{{ $profileUser->name }}
-                <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
-            </h2>            
+            <h3>{{ $profileUser->name }}</h3>            
             <hr>
-            @foreach ($threads as $thread)
-            <div class="card mb-4">
-                <div class="card-header">
-                    <div class="level">
-                        <span class="flex">
-                            <a href="{{ $thread->path() }}">                                
-                                {{ $thread->title }}                                
-                            </a>
-                        </span>
-                        <span>{{ $thread->created_at->diffForHumans() }}</span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="body">{{ $thread->body }}</div>
-                </div>
-            </div>
-            @endforeach {{ $threads->links() }}
+            @foreach ($activities as $date => $activity)
+                <h3>{{ $date }}</h3> <hr>
+                @foreach ($activity as $record)
+                    @include("profiles.activities.{$record->type}", ['activity' => $record])                    
+                @endforeach
+            @endforeach
         </div>
     </div>    
 </div>    

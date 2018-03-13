@@ -13,6 +13,8 @@ class ThreadsViewTest extends TestCase
 
     public function setUp()
     {
+        $this->withExceptionHandling();
+
         parent::setUp();
 
         $this->thread = create(\App\Thread::class);
@@ -21,6 +23,8 @@ class ThreadsViewTest extends TestCase
     /** @test */
     public function a_user_can_view_all_threads()
     {
+        $this->withExceptionHandling();
+
         $this->get('/threads')
             ->assertSee($this->thread->title);
     }
@@ -28,6 +32,8 @@ class ThreadsViewTest extends TestCase
     /** @test */
     public function a_user_can_view_a_specific_thread()
     {
+        $this->withExceptionHandling();
+
         $this->get($this->thread->path())
             ->assertSee($this->thread->title);
     }
@@ -35,6 +41,8 @@ class ThreadsViewTest extends TestCase
     /** @test */
     public function a_user_can_view_replies_associated_to_thread()
     {
+        $this->withExceptionHandling();
+
         $reply = create(\App\Reply::class, ['thread_id' => $this->thread->id]);
 
         $this->get($this->thread->path())
@@ -44,6 +52,8 @@ class ThreadsViewTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_channel()
     {
+        $this->withExceptionHandling();
+
         $channel            = create(\App\Channel::class);
         $threadInChannel    = create(\App\Thread::class, ['channel_id' => $channel->id]);
         $threadNotInChannel = create(\App\Thread::class);
@@ -56,6 +66,8 @@ class ThreadsViewTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_any_username()
     {
+        $this->withExceptionHandling();
+
         $user = create(\App\User::class, ['name' => 'AdityaHajare']);
         $this->signIn($user);
 
@@ -70,6 +82,8 @@ class ThreadsViewTest extends TestCase
     /** @test */
     public function a_user_can_filter_threads_by_popularity()
     {
+        $this->withExceptionHandling();
+
         $threadWithTwoReplies = create(\App\Thread::class);
         create(\App\Reply::class, ['thread_id' => $threadWithTwoReplies->id], 2);
 

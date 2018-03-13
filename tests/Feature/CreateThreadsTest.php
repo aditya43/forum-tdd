@@ -15,6 +15,7 @@ class CreateThreadsTest extends TestCase
     public function unauthenticated_users_cannot_create_forum_thread()
     {
         // $this->expectException(\Illuminate\Auth\AuthenticationException::class);
+        $this->withExceptionHandling();
 
         $this->get('threads/create')
             ->assertRedirect('/login');
@@ -26,6 +27,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function authenticated_user_can_create_new_forum_thread()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create(\App\Thread::class);
@@ -40,6 +43,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_a_valid_channel_id()
     {
+        $this->withExceptionHandling();
+
         factory(\App\Channel::class, 2)->create();
 
         $this->publishThread(['channel_id' => null])
@@ -52,6 +57,8 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_a_title()
     {
+        $this->withExceptionHandling();
+
         $this->publishThread(['title' => null])
             ->assertSessionHasErrors('title');
     }
@@ -59,12 +66,16 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_a_body()
     {
+        $this->withExceptionHandling();
+
         $this->publishThread(['body' => null])
             ->assertSessionHasErrors('body');
     }
 
     public function publishThread($overrides = [])
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = make(\App\Thread::class, $overrides);

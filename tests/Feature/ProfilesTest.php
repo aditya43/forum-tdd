@@ -14,6 +14,8 @@ class ProfilesTest extends TestCase
     /** @test */
     public function a_user_has_a_profile()
     {
+        $this->withExceptionHandling();
+
         $user = create(\App\User::class);
 
         $this->get("/profiles/{$user->name}")
@@ -23,6 +25,8 @@ class ProfilesTest extends TestCase
     /** @test */
     public function profiles_display_all_threads_created_by_the_associated_user()
     {
+        $this->withExceptionHandling();
+
         $user   = create(\App\User::class);
         $thread = create(\App\Thread::class, ['user_id' => $user->id]);
 

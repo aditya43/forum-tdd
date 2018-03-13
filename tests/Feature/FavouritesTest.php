@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithExceptionHandling;
 
 class FavouritesTest extends TestCase
 {
@@ -22,6 +22,8 @@ class FavouritesTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_favourite_any_reply()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
         $reply = create(\App\Reply::class);
 
@@ -33,6 +35,8 @@ class FavouritesTest extends TestCase
     /** @test */
     public function an_authenticated_user_may_only_favourite_a_reply_once()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
         $reply = create(\App\Reply::class);
 
