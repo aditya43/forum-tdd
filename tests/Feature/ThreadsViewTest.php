@@ -11,6 +11,8 @@ class ThreadsViewTest extends TestCase
     use RefreshDatabase;
     use InteractsWithExceptionHandling;
 
+    protected $thread;
+
     public function setUp()
     {
         parent::setUp();

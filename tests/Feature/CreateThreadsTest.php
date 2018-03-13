@@ -15,6 +15,7 @@ class CreateThreadsTest extends TestCase
     public function unauthenticated_users_cannot_create_forum_thread()
     {
         // $this->expectException(\Illuminate\Auth\AuthenticationException::class);
+        $this->withExceptionHandling();
 
         $this->get('threads/create')
             ->assertRedirect('/login');
@@ -65,6 +66,8 @@ class CreateThreadsTest extends TestCase
 
     public function publishThread($overrides = [])
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = make(\App\Thread::class, $overrides);
@@ -91,8 +94,6 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function authorized_users_can_delete_threads()
     {
-        $this->withExceptionHandling();
-
         $this->signIn();
         $thread = create(\App\Thread::class, ['user_id' => auth()->id()]);
         $reply  = create(\App\Reply::class, ['thread_id' => $thread->id]);

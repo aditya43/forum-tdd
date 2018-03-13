@@ -9,8 +9,15 @@ class ProfilesController extends Controller
     public function show(User $user)
     {
         return view('profiles.show', [
-            'profileUser'=> $user,
-            'threads'    => $user->threads()->paginate(5)
-        ]);
+            'profileUser'   => $user,
+            'activities'    => $this->getActivity($user)
+            ]);
+    }
+
+    public function getActivity(User $user)
+    {
+        return $user->activity()->with('subject')->take(50)->get()->groupBy(function ($activity) {
+            return $activity->created_at->format('Y-m-d');
+        });
     }
 }
