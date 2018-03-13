@@ -52,16 +52,17 @@ class ThreadsController extends Controller
             'channel_id' => 'required|exists:channels,id',
             'title'      => 'required',
             'body'       => 'required'
-            ]);
+        ]);
 
         $thread = Thread::create([
-                'user_id'    => auth()->id(),
-                'channel_id' => request('channel_id'),
-                'title'      => request('title'),
-                'body'       => request('body')
-                ]);
+            'user_id'    => auth()->id(),
+            'channel_id' => request('channel_id'),
+            'title'      => request('title'),
+            'body'       => request('body')
+        ]);
 
-        return redirect($thread->path());
+        return redirect($thread->path())
+            ->with('flash', 'Your thread has been published!');
     }
 
     /**

@@ -22,6 +22,7 @@
             flex: 1;
         }
     </style>
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">    
 </head>
 <body>
     <div id="app">
@@ -30,9 +31,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <flash message="{{ session('flash') }}"></flash>
     </div>
     
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    
+    <script src="{{ asset('js/app.js') }}"></script>    
 </body>
 </html>
