@@ -7,7 +7,7 @@
             <h3>{{ $profileUser->name }}</h3>            
             <hr>
             @foreach ($activities as $date => $activity)
-                <h3>{{ $date }}</h3> <hr>
+                <h3>{{ $date }}</h3>
                 @foreach ($activity as $record)
                     @include("profiles.activities.{$record->type}", ['activity' => $record])                    
                 @endforeach
