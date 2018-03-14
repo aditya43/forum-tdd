@@ -8,6 +8,8 @@ class Reply extends Model
 {
     use Favouritable, RecordsActivity;
 
+    protected $appends = ['favouritesCount', 'isFavourited'];
+
     /**
      * Don't auto-apply mass assignment protection.
      *
