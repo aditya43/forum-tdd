@@ -7,9 +7,11 @@
                         replied
                         {{ $reply->created_at->diffForHumans() }}
                 </div>
-                <div>
-                    <favourite :reply="{{ $reply }}"></favourite>
-                </div>
+                @auth
+                    <div>
+                        <favourite :reply="{{ $reply }}"></favourite>
+                    </div>
+                @endauth
             </div>
         </div>
 

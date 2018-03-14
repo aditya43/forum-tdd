@@ -4,6 +4,13 @@ namespace App;
 
 trait Favouritable
 {
+    protected static function bootFavouritable()
+    {
+        static::deleting(function ($model) {
+            $model->favourites->each->delete();
+        });
+    }
+
     /**
      * Reply morphs many Favourite.
      *
