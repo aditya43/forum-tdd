@@ -3,8 +3,8 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h3>{{ $profileUser->name }}</h3>            
+        <div>
+            <h3>{{ $profileUser->name }}</h3>
             <hr>
 
             @foreach ($activities as $date => $activity)
@@ -19,6 +19,6 @@
             @endforeach
 
         </div>
-    </div>    
-</div>    
+    </div>
+</div>
 @endsection

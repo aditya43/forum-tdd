@@ -42,6 +42,10 @@ WIP (Work In Progress)!
 ---
 
 <img src="https://raw.githubusercontent.com/aditya43/forum-tdd/master/screens/3.png">
+
+---
+
+<img src="https://raw.githubusercontent.com/aditya43/forum-tdd/master/screens/4.png">
 </p>
 
 
