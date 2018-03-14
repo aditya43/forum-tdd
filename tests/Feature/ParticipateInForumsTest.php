@@ -12,7 +12,7 @@ class ParticipateInForumsTest extends TestCase
     use InteractsWithExceptionHandling;
 
     /** @test */
-    public function unauthenticated_users_can_not_add_replies()
+    public function unauthenticated_users_cannot_add_replies()
     {
         // $this->expectException(\Illuminate\Auth\AuthenticationException::class);
         $this->withExceptionHandling();
@@ -76,5 +76,35 @@ class ParticipateInForumsTest extends TestCase
         $this->delete("replies/{$reply->id}")->assertStatus(302);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+    }
+
+    /** @test */
+    public function unauthenticated_users_cannot_update_replies()
+    {
+        $this->withExceptionHandling();
+
+        $reply = create(\App\Reply::class);
+
+        $this->patch("replies/{$reply->id}")
+            ->assertRedirect('/login');
+
+        $this->signIn()
+            ->patch("replies/{$reply->id}")
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function authorized_user_can_update_a_reply()
+    {
+        $this->signIn();
+
+        $reply = create(\App\Reply::class, ['user_id' => auth()->id()]);
+
+        $this->patch("replies/{$reply->id}", ['body' => 'Modified reply body']);
+
+        $this->assertDatabaseHas('replies', [
+            'id'   => $reply->id,
+            'body' => 'Modified reply body'
+        ]);
     }
 }

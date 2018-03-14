@@ -14,7 +14,8 @@ require("./bootstrap");
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component("flash", require("./components/flash.vue"));
+Vue.component("flash", require("./components/Flash.vue"));
+Vue.component("reply", require("./components/Reply.vue"));
 
 const app = new Vue({
     el: "#app"
