@@ -25,24 +25,8 @@
 
                     </div>
 
-                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                    <replies :data="{{ $thread->replies }}" @added="repliesCount++" @removed="repliesCount--"></replies>
 
-                    {{--  {{ $replies->links() }}  --}}
-
-                    @if (auth()->check())
-                        <form action="{{ $thread->path() }}/replies" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <textarea name="body" id="body" class="form-control" {{ $errors->has('body') ? 'is-invalid' : ''}} placeholder="Have something to say?" rows="5">{{ old('body') }}</textarea>
-                                <div class="invalid-feedback">{{ $errors->first('body') }}</div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Post Reply</button>
-                            </div>
-                        </form>
-                    @else
-                        <p class="text-center">Please <a href="{{ route('login') }}">sign in</a> to participate in this discussion.</p>
-                    @endif
                 </div>
 
                 <div class="col-md-4">
