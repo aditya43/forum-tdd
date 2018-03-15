@@ -14,6 +14,10 @@
     <link href="{{ asset('app.css') }}" rel="stylesheet">
 
     <style type="text/css">
+        *:focus {
+            outline: 0;
+            box-shadow: none;
+        }
         .level {
             display: flex;
             align-items: center;
@@ -45,7 +49,6 @@
 
         <flash message="{{ session('flash') }}"></flash>
     </div>
-
 
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
