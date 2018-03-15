@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style type="text/css">
         .level {
             display: flex;
@@ -26,7 +27,13 @@
             display: none;
         }
     </style>
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+
+    <script>
+        window.App = {!! json_encode([
+            'user' => Auth::user(),
+            'signedIn' => Auth::check()
+        ]) !!};
+    </script>
 </head>
 <body>
     <div id="app">
