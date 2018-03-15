@@ -13908,6 +13908,11 @@ module.exports = __webpack_require__(59);
 
 window.Vue = __webpack_require__(14);
 
+window.Vue.prototype.authorize = function (handler) {
+    var user = window.App.user;
+    return user ? handler(user) : false;
+};
+
 __webpack_require__(17);
 
 /**
@@ -13920,11 +13925,11 @@ Vue.component("flash", __webpack_require__(40));
 Vue.component("thread-view", __webpack_require__(48));
 
 window.Vue.prototype.authorize = function (handler) {
-  var user = window.App.user;
-  return user ? handler(user) : false;
+    var user = window.App.user;
+    return user ? handler(user) : false;
 };
 var app = new Vue({
-  el: "#app"
+    el: "#app"
 });
 
 /***/ }),
@@ -47894,8 +47899,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         canUpdate: function canUpdate() {
             var _this = this;
 
-            this.authorize(function (user) {
-                return _this.data.user_id == window.App.user.id;
+            return this.authorize(function (user) {
+                return _this.data.user_id == user.id;
             });
         }
     },
