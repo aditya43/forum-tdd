@@ -28,7 +28,9 @@ trait Favouritable
      */
     public function favourite()
     {
-        if (!$this->favourites()->where(['user_id' => auth()->id()])->exists()) {
+        $attributes = ['user_id' => auth()->id()];
+
+        if (!$this->favourites()->where($attributes)->exists()) {
             return $this->favourites()->create($attributes);
         }
     }

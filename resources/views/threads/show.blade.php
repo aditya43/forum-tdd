@@ -31,10 +31,13 @@
                 <div class="col-md-4">
                     <div class="card mb-3">
                         <div class="card-body">
-                            <div class="body">
+                            <div class="body" style="margin-bottom: 1em;">
                                 This thread was published {{ $thread->created_at->diffForHumans() }} by
                                 <a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a>, and currently has <span v-text="repliesCount"></span>
                                 {{ str_plural('reply', $thread->replies_count) }}.
+                            </div>
+                            <div>
+                                <subscribe-button :active="{{ json_encode($thread->isSubscribedTo) }}"></subscribe-button>
                             </div>
                         </div>
                     </div>

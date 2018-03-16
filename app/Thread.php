@@ -15,6 +15,8 @@ class Thread extends Model
      */
     protected $guarded = [];
 
+    protected $appends = ['isSubscribedTo'];
+
     /**
      * Global scope for eager loading relationships.
      *
@@ -103,5 +105,12 @@ class Thread extends Model
     public function subscriptions()
     {
         return $this->hasMany(\App\ThreadSubscription::class);
+    }
+
+    public function getIsSubscribedToAttribute()
+    {
+        return $this->subscriptions()
+            ->where('user_id', auth()->id())
+            ->exists();
     }
 }
