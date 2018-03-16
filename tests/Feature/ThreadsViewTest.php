@@ -41,17 +41,6 @@ class ThreadsViewTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_view_replies_associated_to_thread()
-    {
-        $this->withExceptionHandling();
-
-        $reply = create(\App\Reply::class, ['thread_id' => $this->thread->id]);
-
-        $this->get($this->thread->path())
-            ->assertSee($reply->body);
-    }
-
-    /** @test */
     public function a_user_can_filter_threads_by_channel()
     {
         $this->withExceptionHandling();
@@ -106,7 +95,17 @@ class ThreadsViewTest extends TestCase
 
         $response = $this->getJson($thread->path() . '/replies')->json();
 
-        $this->assertCount(1, $response['data']);
         $this->assertEquals(2, $response['total']);
+    }
+
+    /** @test */
+    public function a_user_can_filter_unanswered_threads()
+    {
+        $thread = create(\App\Thread::class);
+        create(\App\Reply::class, ['thread_id' => $thread->id]);
+
+        $response = $this->getJson('threads?unanswered=1')->json();
+
+        $this->assertCount(1, $response);
     }
 }

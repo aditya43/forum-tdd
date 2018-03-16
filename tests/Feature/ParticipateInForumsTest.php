@@ -24,7 +24,7 @@ class ParticipateInForumsTest extends TestCase
     /** @test */
     public function authenticated_user_can_participate_in_forum_threads()
     {
-        $this->withExceptionHandling();
+        // $this->withExceptionHandling();
 
         $this->signIn();
 
@@ -33,8 +33,8 @@ class ParticipateInForumsTest extends TestCase
 
         $this->post($thread->path() . '/replies', $reply->toArray()); // Submit reply via POST request.
 
-        $this->get($thread->path())
-            ->assertSee($reply->body);
+        $this->assertDatabaseHas('replies', ['body' => $reply->body]);
+        $this->assertEquals(1, $thread->fresh()->replies_count);
     }
 
     /** @test */
@@ -76,6 +76,7 @@ class ParticipateInForumsTest extends TestCase
         $this->delete("replies/{$reply->id}")->assertStatus(302);
 
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]);
+        $this->assertEquals(0, $reply->thread->fresh()->replies_count);
     }
 
     /** @test */

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Filters;
 
 use App\User;
@@ -10,12 +11,12 @@ class ThreadFilters extends Filters
      *
      * @var array
      */
-    protected $filters = ['by', 'popular'];
+    protected $filters = ['by', 'popular', 'unanswered'];
 
     /**
      * Filter the query by a given username.
      *
-     * @param  string $username
+     * @param  string  $username
      * @return Builder
      */
     protected function by($username)
@@ -28,7 +29,6 @@ class ThreadFilters extends Filters
     /**
      * Filter the query according to most popular threads based on their replies count.
      *
-     * @param  string $username
      * @return Builder
      */
     protected function popular()
@@ -36,5 +36,15 @@ class ThreadFilters extends Filters
         $this->query->getQuery()->orders = [];
 
         return $this->query->orderBy('replies_count', 'desc');
+    }
+
+    /**
+     * Filter threads with 0 replies.
+     *
+     * @return Builder
+     */
+    protected function unanswered()
+    {
+        return $this->query->where('replies_count', 0);
     }
 }
