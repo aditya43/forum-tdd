@@ -28,8 +28,7 @@ trait Favouritable
      */
     public function favourite()
     {
-        $attributes = ['user_id' => auth()->id()];
-        if (!$this->favourites()->where($attributes)->exists()) {
+        if (!$this->favourites()->where(['user_id' => auth()->id()])->exists()) {
             return $this->favourites()->create($attributes);
         }
     }
@@ -39,9 +38,7 @@ trait Favouritable
      */
     public function unfavourite()
     {
-        $attributes = ['user_id' => auth()->id()];
-
-        $this->favourites()->where($attributes)->get()->each->delete();
+        $this->favourites()->where(['user_id' => auth()->id()])->get()->each->delete();
     }
 
     /**
