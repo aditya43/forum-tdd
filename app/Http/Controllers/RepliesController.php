@@ -39,9 +39,11 @@ class RepliesController extends Controller
         return back()->with('flash', 'Your reply has been posted!');
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
+
+        $spam->detect(request('body'));
 
         $reply->update(['body' => request('body')]);
     }

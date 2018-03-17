@@ -9,10 +9,14 @@ class Spam
         KeyHeldDown::class,
     ];
 
-    public function detect($body)
+    public function detect($items)
     {
-        foreach ($this->inspections as $inspection) {
-            app($inspection)->detect($body);
+        $items = (array) $items;
+
+        foreach ($items as $item) {
+            foreach ($this->inspections as $inspection) {
+                app($inspection)->detect($item);
+            }
         }
 
         return false;
