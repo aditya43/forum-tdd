@@ -20,7 +20,9 @@ require("./bootstrap");
  */
 
 Vue.component("flash", require("./components/Flash.vue"));
-Vue.component("paginator", require("./components/Paginator"));
+Vue.component("paginator", require("./components/Paginator.vue"));
+Vue.component("UserNotifications", require("./components/UserNotifications.vue"));
+
 Vue.component("thread-view", require("./pages/Thread.vue"));
 
 window.Vue.prototype.authorize = function(handler) {
