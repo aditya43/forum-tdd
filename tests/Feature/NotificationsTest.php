@@ -11,11 +11,16 @@ class NotificationsTest extends TestCase
     use RefreshDatabase;
     use InteractsWithExceptionHandling;
 
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->signIn();
+    }
+
     /** @test */
     public function a_notification_is_prepared_when_a_subscribed_thread_receives_a_reply_that_is_not_posted_by_a_current_user()
     {
-        $this->signIn();
-
         $thread = create(\App\Thread::class)->subscribe();
 
         $this->assertCount(0, auth()->user()->notifications);
@@ -38,18 +43,9 @@ class NotificationsTest extends TestCase
     /** @test */
     public function a_user_can_fetch_their_unread_notifications()
     {
-        $this->signIn();
+        create(\Illuminate\Notifications\DatabaseNotification::class);
 
-        $thread = create(\App\Thread::class)->subscribe();
-
-        $thread->addReply([
-            'user_id' => create(\App\User::class)->id,
-            'body'    => 'Some reply here..'
-        ]);
-
-        $user = auth()->user();
-
-        $response = $this->getJson("/profiles/{$user->name}/notifications/")->json();
+        $response = $this->getJson('/profiles/' . auth()->user()->name . '/notifications/')->json();
 
         $this->assertCount(1, $response);
     }
@@ -57,14 +53,7 @@ class NotificationsTest extends TestCase
     /** @test */
     public function a_user_can_mark_a_notification_as_read()
     {
-        $this->signIn();
-
-        $thread = create(\App\Thread::class)->subscribe();
-
-        $thread->addReply([
-            'user_id' => create(\App\User::class)->id,
-            'body'    => 'Some reply here..'
-        ]);
+        create(\Illuminate\Notifications\DatabaseNotification::class);
 
         $user = auth()->user();
 
