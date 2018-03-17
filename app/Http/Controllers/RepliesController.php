@@ -21,31 +21,35 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread, Request $request, Spam $spam)
     {
-        $this->validate($request, [
-            'body' => 'required'
-        ]);
+        try {
+            $this->validate($request, [
+                'body' => 'required'
+            ]);
 
-        $spam->detect(request('body'));
+            $spam->detect(request('body'));
 
-        $reply = $thread->addReply([
-            'body'    => request('body'),
-            'user_id' => auth()->id()
-        ]);
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
+            $reply = $thread->addReply([
+                'body'    => request('body'),
+                'user_id' => auth()->id()
+            ]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved at this time.', 422);
         }
 
-        return back()->with('flash', 'Your reply has been posted!');
+        return $reply->load('owner');
     }
 
     public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
 
-        $spam->detect(request('body'));
+        try {
+            $spam->detect(request('body'));
 
-        $reply->update(['body' => request('body')]);
+            $reply->update(['body' => request('body')]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved at this time.', 422);
+        }
     }
 
     public function destroy(Reply $reply)
