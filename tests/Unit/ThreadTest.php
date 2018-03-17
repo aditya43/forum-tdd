@@ -36,6 +36,23 @@ class ThreadTest extends TestCase
     }
 
     /** @test */
+    public function a_thread_notifies_all_registered_subscribers_when_a_reply_is_added()
+    {
+        \Illuminate\Support\Facades\Notification::fake();
+
+        $this->signIn();
+
+        $this->thread->subscribe();
+
+        $this->thread->addReply([
+                'body'    => 'Foobar',
+                'user_id' => 999
+            ]);
+
+        \Illuminate\Support\Facades\Notification::assertSentTo(auth()->user(), \App\Notifications\ThreadWasUpdated::class);
+    }
+
+    /** @test */
     public function a_thread_has_replies()
     {
         $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $this->thread->replies);
