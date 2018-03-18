@@ -28,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
          * To share with all views using View::share()
          */
         // \View::share('channels', \App\Channel::all());
+
+        \Validator::extend('spamfree', '\App\Rules\SpamFree@passes');
     }
 
     /**

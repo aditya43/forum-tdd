@@ -34,7 +34,9 @@
                             <textarea name="body" id="body" class="form-control {{ $errors->has('body') ? 'is-invalid' : ''}}" rows="10" {{ $errors->has('body') ? 'is-invalid' : ''}} required>{{ old('body') }}</textarea>
                             <div class="invalid-feedback">{{ $errors->first('body') }}</div>
                         </div>
-
+                        {{--  @if ($errors->has('body'))
+                            {{ dd($errors) }}
+                        @endif  --}}
                         <button type="submit" class="btn btn-primary">Publish</button>
                     </form>
                 </div>
