@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Reply;
 use App\Thread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RepliesController extends Controller
 {
@@ -20,6 +21,12 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread)
     {
+        // $this->authorize('create', new \App\Reply()); // Or we can use Gate facade as below
+
+        if (Gate::denies('create', new \App\Reply())) {
+            return response('You can post maximum 1 reply per minute.', 422);
+        }
+
         try {
             request()->validate(['body' => 'required|spamfree']);
 

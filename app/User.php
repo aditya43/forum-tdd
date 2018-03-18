@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Activity::class)->latest();
     }
+
+    public function lastReply()
+    {
+        return $this->hasOne(\App\Reply::class)->latest();
+    }
 }
