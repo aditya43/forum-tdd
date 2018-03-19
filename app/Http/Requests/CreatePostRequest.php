@@ -20,6 +20,13 @@ class CreatePostRequest extends FormRequest
         return Gate::allows('create', new \App\Reply());
     }
 
+    /**
+     * Handle a failed authorization attempt.
+     *
+     * @return void
+     *
+     * @throws ThrottleException
+     */
     protected function failedAuthorization()
     {
         throw new ThrottleException('Your can post 1 reply per minute.');

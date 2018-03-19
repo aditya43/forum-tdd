@@ -6,11 +6,19 @@ use App\Reply;
 
 class FavouritesController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Store a new favorite in the database.
+     *
+     * @param Reply $reply
+     */
     public function store(Reply $reply)
     {
         $reply->favourite();
@@ -18,6 +26,11 @@ class FavouritesController extends Controller
         return back();
     }
 
+    /**
+     * Delete the favorite.
+     *
+     * @param Reply $reply
+     */
     public function destroy(Reply $reply)
     {
         $reply->unfavourite();

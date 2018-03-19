@@ -10,6 +10,9 @@ use App\Filters\ThreadFilters;
 
 class ThreadsController extends Controller
 {
+    /**
+     * Create a new ThreadsController instance.
+     */
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
@@ -18,6 +21,8 @@ class ThreadsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  Channel                   $channel
+     * @param  ThreadFilters             $filters
      * @return \Illuminate\Http\Response
      */
     public function index(Channel $channel, ThreadFilters $filters)
