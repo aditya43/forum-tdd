@@ -8,6 +8,11 @@ class Reply extends Model
 {
     use Favouritable, RecordsActivity;
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = ['favouritesCount', 'isFavourited'];
 
     /**
@@ -24,6 +29,9 @@ class Reply extends Model
      */
     protected $with = ['owner', 'favourites'];
 
+    /**
+     * Boot the reply instance.
+     */
     public static function boot()
     {
         parent::boot();
@@ -47,25 +55,59 @@ class Reply extends Model
         return $this->belongsTo(\App\User::class, 'user_id');
     }
 
+    /**
+     * A reply belongs to a thread.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function thread()
     {
         return $this->belongsTo(\App\Thread::class);
     }
 
+    /**
+     * Determine the path to the reply.
+     *
+     * @return string
+     */
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
     }
 
+    /**
+     * Determine if the reply was just published a moment ago.
+     *
+     * @return bool
+     */
     public function wasJustPublished()
     {
         return $this->created_at->gt(\Carbon\Carbon::now()->subMinute());
     }
 
+    /**
+     * Fetch all mentioned users within the reply's body.
+     *
+     * @return array
+     */
     public function mentionedUsers()
     {
-        preg_match_all('/\@([\w.]+)/', $this->body, $matches);
+        preg_match_all('/@([\w\-]+)/', $this->body, $matches);
 
         return $matches[1];
+    }
+
+    /**
+     * Set the body attribute.
+     *
+     * @param string $body
+     */
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace(
+            '/@([\w\-]+)/',
+            '<a href="/profiles/$1">$0</a>',
+            $body
+        );
     }
 }
