@@ -21,11 +21,24 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-        return $thread->addReply([
-                'body'    => request('body'),
-                'user_id' => auth()->id()
-            ])
-            ->load('owner');
+        $reply = $thread->addReply([
+            'body'    => request('body'),
+            'user_id' => auth()->id()
+        ]);
+
+        preg_match_all('/\@([\w.]+)/', $reply->body, $matches);
+
+        $names = $matches[1];
+
+        foreach ($names as $name) {
+            $user = \App\User::where('name', $name)->first();
+
+            if ($user) {
+                $user->notify(new \App\Notifications\YouWereMentioned($reply));
+            }
+        }
+
+        return $reply->load('owner');
     }
 
     public function update(Reply $reply)
