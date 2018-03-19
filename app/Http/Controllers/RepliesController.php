@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Reply;
 use App\Thread;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
 {
@@ -19,26 +19,13 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(5);
     }
 
-    public function store($channelId, Thread $thread)
+    public function store($channelId, Thread $thread, CreatePostRequest $form)
     {
-        // $this->authorize('create', new \App\Reply()); // Or we can use Gate facade as below
-
-        if (Gate::denies('create', new \App\Reply())) {
-            return response('You can post maximum 1 reply per minute.', 422);
-        }
-
-        try {
-            request()->validate(['body' => 'required|spamfree']);
-
-            $reply = $thread->addReply([
+        return $thread->addReply([
                 'body'    => request('body'),
                 'user_id' => auth()->id()
-            ]);
-        } catch (\Exception $e) {
-            return response('Sorry, your reply could not be saved at this time.', 422);
-        }
-
-        return $reply->load('owner');
+            ])
+            ->load('owner');
     }
 
     public function update(Reply $reply)

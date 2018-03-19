@@ -43,14 +43,16 @@ class CreateThreadsTest extends TestCase
     /** @test */
     public function a_thread_requires_a_valid_channel_id()
     {
-        $this->withExceptionHandling();
+        // $this->withExceptionHandling();
 
         factory(\App\Channel::class, 2)->create();
 
         $this->publishThread(['channel_id' => null])
+            // ->assertStatus(422);
             ->assertSessionHasErrors('channel_id');
 
         $this->publishThread(['channel_id' => 999])
+            // ->assertStatus(422);
             ->assertSessionHasErrors('channel_id');
     }
 
@@ -61,6 +63,7 @@ class CreateThreadsTest extends TestCase
 
         $this->publishThread(['title' => null])
             ->assertSessionHasErrors('title');
+        // ->assertStatus(422);
     }
 
     /** @test */
@@ -70,6 +73,7 @@ class CreateThreadsTest extends TestCase
 
         $this->publishThread(['body' => null])
             ->assertSessionHasErrors('body');
+        // ->assertStatus(422);
     }
 
     public function publishThread($overrides = [])

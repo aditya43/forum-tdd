@@ -48,7 +48,8 @@ class ParticipateInForumsTest extends TestCase
         $reply  = make(\App\Reply::class, ['body' => null]);
 
         $this->post($thread->path() . '/replies', $reply->toArray())
-            ->assertStatus(422);
+            // ->assertStatus(422);
+            ->assertSessionHasErrors('body');
     }
 
     /** @test */
@@ -112,7 +113,9 @@ class ParticipateInForumsTest extends TestCase
     /** @test */
     public function replies_containing_spam_may_not_be_created()
     {
-        config(['aditesting' => 'yes']);
+        // config(['aditesting' => 'yes']);
+
+        $this->withExceptionHandling();
 
         $this->signIn();
 
@@ -122,12 +125,15 @@ class ParticipateInForumsTest extends TestCase
         ]);
 
         $this->post($thread->path() . '/replies', $reply->toArray())
-            ->assertStatus(422);
+            // ->assertStatus(422);
+            ->assertSessionHasErrors('body');
     }
 
     /** @test */
     public function user_can_post_only_one_reply_per_minute()
     {
+        $this->withExceptionHandling();
+
         $this->signIn();
 
         $thread = create(\App\Thread::class);
@@ -139,6 +145,6 @@ class ParticipateInForumsTest extends TestCase
             ->assertStatus(201);
 
         $this->post($thread->path() . '/replies', $reply->toArray())
-            ->assertStatus(422);
+            ->assertStatus(429);
     }
 }
