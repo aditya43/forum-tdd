@@ -83,7 +83,7 @@ class Thread extends Model
     {
         $reply =  $this->replies()->create($reply);
 
-        event(new \App\Events\ThreadHasNewReply($this, $reply));
+        event(new \App\Events\ThreadReceivedNewReply($reply));
 
         return $reply;
     }
