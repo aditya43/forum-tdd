@@ -58,17 +58,17 @@ class ThreadsController extends Controller
             'channel_id' => 'required|exists:channels,id',
             'title'      => 'required|spamfree',
             'body'       => 'required|spamfree'
-        ]);
+            ]);
 
         $thread = Thread::create([
-            'user_id'    => auth()->id(),
-            'channel_id' => request('channel_id'),
-            'title'      => request('title'),
-            'body'       => request('body')
-        ]);
+                'user_id'    => auth()->id(),
+                'channel_id' => request('channel_id'),
+                'title'      => request('title'),
+                'body'       => request('body')
+                ]);
 
         return redirect($thread->path())
-            ->with('flash', 'Your thread has been published!');
+                    ->with('flash', 'Your thread has been published!');
     }
 
     /**
@@ -151,6 +151,6 @@ class ThreadsController extends Controller
 
         // dd($threads->toSql()); // To print the sql query that is being fired.
 
-        return $threads->get();
+        return $threads->paginate(5);
     }
 }
